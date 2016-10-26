@@ -28,4 +28,4 @@ class Test_Replaced(unittest.TestCase):
         self.assertEqual(replaced("aa", "a", "ba"), "baba")
 
         self.assertEqual(replaced("abc", "b", "z"), "azc")
-        self.assertEqual(replaced("", "", "f"), "")
+        self.assertEqual(replaced("abc", "abc", "f"), "f")
