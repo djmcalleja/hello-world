@@ -1,0 +1,23 @@
+proposeModification(String modId, String code, String title, String description, Integer duration) {
+
+	// Errors
+	If modification exists with same modId:
+		return error("Modification already exists with that ID")
+	If modification exists with same title:
+		return error("Modification already exists with that title")
+	If duration is not valid:
+		return error("Modification duration is not valid")
+
+	If module/programme exists with same code:
+		// Modify existing or delete existing
+		If title is empty:
+			actionType = "DELETE"
+			Make Proposal with attributes: (actionType, modId, code)
+		Else
+			actionType = "MODIFY"
+			Make Proposal with attributes: (actionType, modId, code, title, description, duration)
+	Else If no module/programme exists with same code:
+		actionType = "CREATE"
+		Make Proposal with attributes: (actionType, modId, code, title, description, duration)
+		
+}
