@@ -1,6 +1,5 @@
-proposeModification(String modId, String code, String title, String description, Integer duration) {
-
-	// Errors
+proposeModification(String modId, String code, String title, String description, Integer duration)
+	// Deal with possible errors:
 	If modification exists with same modId:
 		return error("Modification already exists with that ID")
 	If modification exists with same title:
@@ -8,6 +7,7 @@ proposeModification(String modId, String code, String title, String description,
 	If duration is not valid:
 		return error("Modification duration is not valid")
 
+	// Make Proposals:
 	If module/programme exists with same code:
 		// Modify existing or delete existing
 		If title is empty:
@@ -19,5 +19,23 @@ proposeModification(String modId, String code, String title, String description,
 	Else If no module/programme exists with same code:
 		actionType = "CREATE"
 		Make Proposal with attributes: (actionType, modId, code, title, description, duration)
+
+withdrawModification(String modId)
+	// Deal with possible errors:
+	If modification with modId doesn't exist:
+		return error("Modification does not exist")
+	If modification exists but is not in "Proposal" state:
+		return error("Modification already withdrawn, approved or rejected")
 		
-}
+	// Withdraw mod
+	Set modification(modId) status to "Withdrawn" state
+	
+approveModification(String modId)
+	// Deal with possible errors:
+	If modification with modId doesn't exist:
+		return error("Modification does not exist")
+	If modification exists but is not in "Proposal" state:
+		return error("Modification already withdrawn, approved or rejected")
+		
+	// Approve mod
+	Set modification(modId) status to "Approved" state
