@@ -1,4 +1,4 @@
-proposeModification(modId: String, code: String, title: String, description: String, duration: Integer) {
+proposeModification(modId: String, code: String, title: String, description: String, duration: Integer)
 activity:
 	// Deal with possible errors:
 	if modId : Proposal->collect(modificationId) then
@@ -22,21 +22,23 @@ activity:
 		return new Proposal(actionType, modId, code, title, description, duration)
 
 withdrawModification(modId: String)
+activity:
 	// Deal with possible errors:
 	if modId /: Proposal->collect(modificationId)
 		"Modification does not exist"->display()
-	else if modification exists but is not in "Proposal" state:
+	else getProposal(modId).state != "Proposal":
 		"Modification already withdrawn, approved or rejected"->display()
 		
-	// Withdraw mod
-	Set modification(modId) status to "Withdrawn" state
+	// Withdraw modification proposal
+	getProposal(modId).state = "Withdrawn"
 	
 approveModification(modId: String)
+activity:
 	// Deal with possible errors:
-	If modification with modId doesn't exist:
+	if modId /: Proposal->collect(modificationId)
 		"Modification does not exist"->display()
-	If modification exists but is not in "Proposal" state:
+	else getProposal(modId).state != "Proposal":
 		"Modification already withdrawn, approved or rejected"->display()
 		
 	// Approve mod
-	Set modification(modId) status to "Approved" state
+	getProposal(modId).state = "Approval"
